@@ -1,0 +1,1307 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>EXCMarket — Roblox Store</title>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;700;800;900&display=swap" rel="stylesheet"/>
+<style>
+:root{
+  --b1:#3b82f6;--b2:#8b5cf6;
+  --bg:#0a0a14;--card:#13131f;--card2:#1a1a2e;--card3:#22223a;
+  --border:rgba(255,255,255,0.07);
+  --text:#f0f0ff;--muted:#7878a0;
+  --green:#22c55e;--gold:#ffd700;--red:#ff3b3b;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;overflow-x:hidden}
+img{-webkit-user-drag:none;user-select:none;-webkit-user-select:none}
+::-webkit-scrollbar{width:4px}::-webkit-scrollbar-thumb{background:#3b82f6;border-radius:2px}
+
+.grad{background:linear-gradient(135deg,var(--b1),var(--b2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.grad-bg{background:linear-gradient(135deg,var(--b1),var(--b2))}
+
+/* PAGES */
+.page{display:none;min-height:100vh}
+.page.on{display:block}
+
+/* NAV */
+nav{position:sticky;top:0;z-index:99;background:rgba(10,10,20,.95);backdrop-filter:blur(16px);border-bottom:1px solid var(--border)}
+.nav-in{max-width:1200px;margin:0 auto;height:60px;display:flex;align-items:center;justify-content:space-between;padding:0 16px;gap:12px}
+.nav-logo{display:flex;align-items:center;gap:8px;cursor:pointer;text-decoration:none}
+.nav-logo img{width:36px;height:36px;border-radius:8px;object-fit:cover;flex-shrink:0}
+.nav-logo-name{font-family:'Fredoka One',cursive;font-size:20px}
+.nav-links{display:flex;gap:2px}
+.nav-link{padding:7px 12px;border-radius:8px;font-size:13px;font-weight:700;color:var(--muted);cursor:pointer;border:none;background:none;font-family:'Nunito',sans-serif;transition:all .2s}
+.nav-link:hover{color:#fff;background:rgba(255,255,255,.06)}
+.nav-cart{position:relative;background:var(--card2);border:1px solid var(--border);border-radius:9px;padding:7px 14px;font-size:13px;font-weight:700;color:var(--text);cursor:pointer;display:flex;align-items:center;gap:6px;font-family:'Nunito',sans-serif;transition:all .2s;-webkit-tap-highlight-color:transparent}
+.nav-cart:hover{border-color:var(--b1)}
+.cart-dot{position:absolute;top:-6px;right:-6px;background:linear-gradient(135deg,var(--b1),var(--b2));color:#fff;font-size:9px;font-weight:900;width:18px;height:18px;border-radius:50%;display:none;align-items:center;justify-content:center}
+.cart-dot.on{display:flex}
+
+/* HERO */
+.hero{max-width:1200px;margin:0 auto;padding:48px 16px 36px}
+.hero h1{font-family:'Fredoka One',cursive;font-size:clamp(32px,5vw,60px);line-height:1.1;margin-bottom:12px}
+.hero p{font-size:15px;color:var(--muted);max-width:480px;line-height:1.7;margin-bottom:24px}
+.hero-btns{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:32px}
+.btn-p{padding:12px 24px;border:none;border-radius:11px;font-family:'Nunito',sans-serif;font-size:14px;font-weight:800;cursor:pointer;transition:all .2s;-webkit-tap-highlight-color:transparent}
+.btn-p.primary{background:linear-gradient(135deg,var(--b1),var(--b2));color:#fff;box-shadow:0 4px 16px rgba(139,92,246,.3)}
+.btn-p.primary:hover{opacity:.9;transform:translateY(-1px)}
+.btn-p.sec{background:transparent;color:#fff;border:2px solid var(--border)}
+.btn-p.sec:hover{border-color:var(--b1);color:var(--b1)}
+.stats{display:flex;gap:24px;flex-wrap:wrap}
+.stat-n{font-family:'Fredoka One',cursive;font-size:26px}
+.stat-l{font-size:10px;color:var(--muted);font-weight:700;text-transform:uppercase;letter-spacing:.4px}
+
+/* SECTION */
+.sec{max-width:1200px;margin:0 auto;padding:28px 16px}
+.sec-hd{display:flex;align-items:center;justify-content:space-between;margin-bottom:18px;gap:10px;flex-wrap:wrap}
+.sec-title{font-family:'Fredoka One',cursive;font-size:22px;display:flex;align-items:center;gap:8px}
+.sec-badge{background:linear-gradient(135deg,var(--b1),var(--b2));color:#fff;font-size:9px;font-weight:800;padding:2px 8px;border-radius:20px;text-transform:uppercase}
+.cat-tabs{display:flex;gap:6px;margin-bottom:16px;flex-wrap:wrap}
+.cat-tab{padding:6px 14px;border-radius:20px;font-size:12px;font-weight:700;cursor:pointer;border:1.5px solid var(--border);background:transparent;color:var(--muted);font-family:'Nunito',sans-serif;transition:all .2s;-webkit-tap-highlight-color:transparent}
+.cat-tab.on{background:linear-gradient(135deg,var(--b1),var(--b2));border-color:transparent;color:#fff}
+
+/* ROBUX GRID */
+.rbx-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:12px}
+.rbx-card{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:18px;text-align:center;cursor:pointer;transition:all .2s;position:relative;overflow:hidden;-webkit-tap-highlight-color:transparent}
+.rbx-card:hover,.rbx-card:active{transform:translateY(-3px);border-color:rgba(139,92,246,.4)}
+.rbx-card.pop{border-color:rgba(139,92,246,.4)}
+.pop-lbl{position:absolute;top:0;right:0;background:linear-gradient(135deg,var(--b1),var(--b2));color:#fff;font-size:8px;font-weight:900;padding:3px 10px;border-radius:0 14px 0 10px;text-transform:uppercase}
+.rbx-ic{height:44px;display:flex;align-items:center;justify-content:center;margin-bottom:8px}
+.rbx-ic img{width:36px;height:36px;object-fit:contain;pointer-events:none}
+.rbx-amt{font-family:'Fredoka One',cursive;font-size:22px}
+.rbx-sub{font-size:10px;color:var(--muted);font-weight:700;margin-bottom:10px}
+.rbx-price{font-family:'Fredoka One',cursive;font-size:17px;margin-bottom:2px}
+.rbx-bonus{font-size:10px;color:var(--green);font-weight:700;min-height:14px;margin-bottom:10px}
+.btn-buy{width:100%;padding:8px;background:linear-gradient(135deg,var(--b1),var(--b2));color:#fff;border:none;border-radius:7px;font-family:'Nunito',sans-serif;font-size:12px;font-weight:800;cursor:pointer;pointer-events:none}
+
+/* PRODUCT GRID */
+.prod-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:12px}
+.prod-card{background:var(--card);border:1px solid var(--border);border-radius:14px;overflow:hidden;cursor:pointer;transition:all .2s;-webkit-tap-highlight-color:transparent}
+.prod-card:hover,.prod-card:active{transform:translateY(-3px);border-color:rgba(139,92,246,.3)}
+.prod-img{height:110px;display:flex;align-items:center;justify-content:center;font-size:44px;position:relative}
+.ptag{position:absolute;top:6px;left:6px;font-size:8px;font-weight:800;padding:2px 6px;border-radius:5px;text-transform:uppercase}
+.hot{background:var(--red);color:#fff}.new{background:var(--green);color:#fff}.rare{background:linear-gradient(135deg,var(--b1),var(--b2));color:#fff}.lim{background:linear-gradient(135deg,var(--gold),#ff8c00);color:#000}
+.prod-body{padding:10px 12px}
+.prod-name{font-size:12px;font-weight:800;margin-bottom:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.prod-meta{font-size:10px;color:var(--muted);margin-bottom:7px}
+.prod-ft{display:flex;align-items:center;justify-content:space-between;gap:4px}
+.prod-price{font-family:'Fredoka One',cursive;font-size:15px}
+.btn-sm{padding:5px 10px;border-radius:6px;font-family:'Nunito',sans-serif;font-size:10px;font-weight:800;cursor:pointer;border:none;transition:all .2s;-webkit-tap-highlight-color:transparent}
+.btn-sm.grad-bg{color:#fff}
+.btn-sm.out{background:var(--card2);border:1px solid var(--border);color:var(--muted)}
+.btn-sm.out:hover{border-color:var(--b1);color:var(--b1)}
+
+/* ACC GRID */
+.acc-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:12px}
+.acc-card{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:16px;cursor:pointer;transition:all .2s;-webkit-tap-highlight-color:transparent}
+.acc-card:hover,.acc-card:active{transform:translateY(-3px);border-color:rgba(139,92,246,.3)}
+.acc-hd{display:flex;align-items:center;gap:10px;margin-bottom:10px}
+.acc-av{width:42px;height:42px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0}
+.acc-info h3{font-size:14px;font-weight:800;margin-bottom:1px}
+.acc-info span{font-size:10px;color:var(--muted)}
+.acc-stats{display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px;margin-bottom:10px}
+.acc-s{background:var(--card2);border-radius:7px;padding:6px;text-align:center}
+.acc-sv{font-family:'Fredoka One',cursive;font-size:14px}
+.acc-sk{font-size:9px;color:var(--muted);font-weight:700;text-transform:uppercase}
+.acc-tags{display:flex;gap:4px;flex-wrap:wrap;margin-bottom:10px}
+.acc-tag{background:var(--card2);border:1px solid var(--border);border-radius:4px;padding:2px 6px;font-size:9px;font-weight:700;color:var(--muted)}
+.acc-tag.r{color:var(--b2);border-color:rgba(139,92,246,.25)}
+.acc-tag.l{color:var(--gold);border-color:rgba(255,215,0,.25)}
+.acc-ft{display:flex;align-items:center;justify-content:space-between}
+.acc-price{font-family:'Fredoka One',cursive;font-size:18px}
+
+/* LIMITED */
+.lim-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:12px}
+.lim-card{background:var(--card);border:1px solid rgba(255,215,0,.12);border-radius:14px;overflow:hidden;cursor:pointer;transition:all .2s;-webkit-tap-highlight-color:transparent}
+.lim-card:hover,.lim-card:active{transform:translateY(-3px);border-color:rgba(255,215,0,.35)}
+.lim-img{height:120px;display:flex;align-items:center;justify-content:center;font-size:52px;background:linear-gradient(135deg,#15152a,#22183a)}
+.lim-body{padding:10px 12px}
+.lim-name{font-size:12px;font-weight:800;margin-bottom:2px}
+.lim-rap{font-size:10px;color:var(--muted);margin-bottom:6px}
+.lim-rap span{color:var(--green);font-weight:700}
+.lim-ft{display:flex;align-items:center;justify-content:space-between}
+.lim-price{font-family:'Fredoka One',cursive;font-size:15px;color:var(--gold)}
+.lim-stk{font-size:9px;color:var(--red);font-weight:700}
+
+/* TRUST */
+.trust{background:var(--card);border-top:1px solid var(--border);border-bottom:1px solid var(--border);padding:24px 16px;margin:16px 0}
+.trust-in{max-width:1200px;margin:0 auto;display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:16px}
+.trust-item{display:flex;align-items:center;gap:10px}
+.trust-icon{font-size:26px}
+.trust-text h4{font-size:12px;font-weight:800;margin-bottom:1px}
+.trust-text p{font-size:10px;color:var(--muted);line-height:1.4}
+
+/* FOOTER */
+footer{background:var(--card);border-top:1px solid var(--border);padding:32px 16px 20px;position:relative;z-index:1}
+.foot-in{max-width:1200px;margin:0 auto}
+.foot-top{display:grid;grid-template-columns:2fr 1fr 1fr;gap:24px;margin-bottom:24px}
+.foot-brand p{font-size:12px;color:var(--muted);line-height:1.6;margin-top:6px;max-width:220px}
+.foot-col h4{font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.4px;color:var(--muted);margin-bottom:8px}
+.foot-col a{display:block;font-size:12px;color:var(--muted);text-decoration:none;margin-bottom:5px}
+.foot-col a:hover{color:var(--b1)}
+.foot-bottom{border-top:1px solid var(--border);padding-top:14px}
+.foot-bottom p{font-size:11px;color:var(--muted)}
+.foot-disc{font-size:9px;color:#3a3a5a;margin-top:6px;line-height:1.5}
+
+/* CART SIDEBAR */
+.cart-ov{position:fixed;inset:0;background:rgba(0,0,0,.7);z-index:149;opacity:0;pointer-events:none;transition:opacity .3s}
+.cart-ov.on{opacity:1;pointer-events:all}
+.cart-sb{position:fixed;right:0;top:0;bottom:0;width:min(340px,100vw);background:var(--card);border-left:1px solid var(--border);z-index:150;transform:translateX(100%);transition:transform .3s;display:flex;flex-direction:column}
+.cart-sb.on{transform:translateX(0)}
+.cart-hd{padding:16px 18px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between}
+.cart-hd h3{font-family:'Fredoka One',cursive;font-size:18px}
+.cart-x{background:var(--card2);border:none;color:var(--muted);width:30px;height:30px;border-radius:7px;cursor:pointer;font-size:16px;display:flex;align-items:center;justify-content:center;transition:all .2s}
+.cart-x:hover{color:#fff;background:var(--red)}
+.cart-items{flex:1;overflow-y:auto;padding:14px 18px;display:flex;flex-direction:column;gap:10px}
+.cart-empty{text-align:center;padding:36px 16px;color:var(--muted)}
+.cart-empty .ic{font-size:44px;margin-bottom:10px}
+.cart-item{background:var(--card2);border:1px solid var(--border);border-radius:10px;padding:10px;display:flex;align-items:center;gap:10px}
+.ci-ic{width:40px;height:40px;background:var(--card3);border-radius:7px;display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0}
+.ci-info{flex:1}
+.ci-name{font-size:12px;font-weight:800;margin-bottom:1px}
+.ci-meta{font-size:10px;color:var(--muted)}
+.ci-price{font-family:'Fredoka One',cursive;font-size:14px}
+.ci-rm{background:none;border:none;color:var(--muted);cursor:pointer;font-size:14px;padding:4px;transition:color .2s}
+.ci-rm:hover{color:var(--red)}
+.cart-ft{padding:14px 18px;border-top:1px solid var(--border)}
+.cart-total{display:flex;justify-content:space-between;margin-bottom:12px}
+.cart-total-lbl{font-size:13px;color:var(--muted);font-weight:700}
+.cart-total-val{font-family:'Fredoka One',cursive;font-size:20px}
+.btn-co{width:100%;padding:13px;background:linear-gradient(135deg,var(--b1),var(--b2));color:#fff;border:none;border-radius:10px;font-family:'Nunito',sans-serif;font-size:14px;font-weight:900;cursor:pointer;transition:all .2s;-webkit-tap-highlight-color:transparent}
+.btn-co:hover{opacity:.9}
+.btn-co:disabled{opacity:.4;cursor:not-allowed}
+
+/* ========== CHECKOUT ========== */
+.co-wrap{max-width:1000px;margin:0 auto;padding:20px 16px;display:grid;grid-template-columns:1fr 320px;gap:18px;align-items:start}
+@media(max-width:760px){.co-wrap{grid-template-columns:1fr}.ord-sum{order:-1;position:static}}
+#pageCheckout{isolation:isolate}
+.back-btn{display:flex;align-items:center;gap:6px;background:var(--card2);border:1px solid var(--border);color:var(--muted);padding:8px 14px;border-radius:9px;font-family:'Nunito',sans-serif;font-size:12px;font-weight:700;cursor:pointer;max-width:fit-content;margin:16px 16px 0;position:relative;z-index:1;transition:all .2s;-webkit-tap-highlight-color:transparent}
+.back-btn:hover{border-color:var(--b1);color:var(--b1)}
+.co-panel{display:flex;flex-direction:column;gap:14px}
+.co-card{background:var(--card);border:1px solid var(--border);border-radius:16px;overflow:hidden}
+.co-hd{padding:14px 18px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:8px}
+.co-num{width:24px;height:24px;border-radius:50%;background:linear-gradient(135deg,var(--b1),var(--b2));color:#fff;font-size:11px;font-weight:900;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.co-hd h2{font-size:14px;font-weight:800}
+.co-body{padding:16px 18px}
+.frow{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px}
+.frow.s1{grid-template-columns:1fr}
+.fld label{display:block;font-size:10px;font-weight:700;color:var(--muted);margin-bottom:4px;text-transform:uppercase;letter-spacing:.3px}
+.fld input,.fld select{width:100%;padding:9px 12px;background:var(--card2);border:1.5px solid var(--border);border-radius:9px;color:var(--text);font-family:'Nunito',sans-serif;font-size:13px;font-weight:600;outline:none;transition:border-color .2s;appearance:none;-webkit-appearance:none}
+.fld input:focus,.fld select:focus{border-color:var(--b1)}
+.fld input::placeholder{color:var(--muted)}
+.fld select option{background:var(--card2)}
+
+/* PM */
+.pm-tabs{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin-bottom:14px}
+.pm-tab{padding:8px 4px;background:var(--card2);border:1.5px solid var(--border);border-radius:10px;cursor:pointer;text-align:center;transition:all .2s;-webkit-tap-highlight-color:transparent}
+.pm-tab.on{border-color:var(--b1);background:rgba(59,130,246,.08)}
+.pm-tab-ic{font-size:18px}
+.pm-tab-lbl{font-size:9px;font-weight:800;color:var(--muted);text-transform:uppercase;letter-spacing:.2px}
+.pm-tab.on .pm-tab-lbl{color:var(--b1)}
+.pm-cont{display:none}
+.pm-cont.on{display:block}
+
+/* QRIS */
+.timer-row{background:rgba(139,92,246,.08);border:1px solid rgba(139,92,246,.2);border-radius:9px;padding:10px 14px;display:flex;align-items:center;justify-content:space-between;margin-bottom:14px}
+.timer-lbl{font-size:11px;font-weight:700;color:var(--muted)}
+.timer-val{font-family:'Fredoka One',cursive;font-size:20px;color:var(--b2)}
+.qr-box{width:180px;height:180px;margin:0 auto 10px;background:#fff;border-radius:12px;display:flex;align-items:center;justify-content:center;padding:8px}
+.qr-amount{font-family:'Fredoka One',cursive;font-size:18px;text-align:center;margin-bottom:4px}
+.qr-note{font-size:11px;color:var(--muted);text-align:center;margin-bottom:10px;line-height:1.5}
+.qr-apps{display:flex;justify-content:center;gap:6px;flex-wrap:wrap}
+.qr-app{background:var(--card2);border:1px solid var(--border);border-radius:7px;padding:4px 10px;font-size:10px;font-weight:700;color:var(--muted)}
+
+/* Bank */
+.bank-list{display:flex;flex-direction:column;gap:7px}
+.bank-opt{background:var(--card2);border:1.5px solid var(--border);border-radius:9px;padding:10px 12px;cursor:pointer;display:flex;align-items:center;gap:10px;transition:all .2s;-webkit-tap-highlight-color:transparent}
+.bank-opt.sel{border-color:var(--b1)}
+.bk-logo{width:44px;height:26px;border-radius:5px;display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:900;flex-shrink:0}
+.bca{background:#005baa;color:#fff}.bri{background:#00529b;color:#fff}.mdr{background:#003d7c;color:#e6a817}
+.bk-info{flex:1}
+.bk-name{font-size:12px;font-weight:800;margin-bottom:1px}
+.bk-num{font-family:'Fredoka One',cursive;font-size:14px;color:var(--b1);letter-spacing:1px}
+.bk-hold{font-size:9px;color:var(--muted)}
+.btn-cp{background:var(--card3);border:1px solid var(--border);color:var(--muted);padding:4px 9px;border-radius:6px;font-family:'Nunito',sans-serif;font-size:9px;font-weight:700;cursor:pointer;flex-shrink:0;transition:all .2s}
+.btn-cp:hover{border-color:var(--b1);color:var(--b1)}
+.btn-cp.ok{border-color:var(--green);color:var(--green)}
+.bank-note{background:var(--card2);border:1px solid var(--border);border-radius:8px;padding:9px 12px;margin-top:10px;font-size:10px;color:var(--muted);line-height:1.6}
+.bank-note strong{color:var(--text)}
+.up-zone{border:2px dashed var(--border);border-radius:9px;padding:16px;text-align:center;cursor:pointer;transition:all .2s;margin-top:10px}
+.up-zone:hover{border-color:var(--b1)}
+.up-icon{font-size:24px;margin-bottom:4px}
+.up-text{font-size:11px;color:var(--muted);font-weight:700}
+.up-text span{color:var(--b1)}
+.up-prev{display:none;text-align:center;margin-top:8px}
+.up-prev img{max-width:90px;border-radius:7px}
+
+/* Ewallet */
+.ew-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:7px;margin-bottom:12px}
+.ew-opt{background:var(--card2);border:1.5px solid var(--border);border-radius:9px;padding:10px 6px;cursor:pointer;text-align:center;transition:all .2s;-webkit-tap-highlight-color:transparent}
+.ew-opt.sel{border-color:var(--green)}
+.ew-icon{font-size:26px;margin-bottom:4px}
+.ew-name{font-size:11px;font-weight:800}
+.ew-detail{background:var(--card2);border:1.5px solid var(--green);border-radius:9px;padding:12px;display:none}
+.ew-detail.on{display:block}
+.ew-num-row{display:flex;align-items:center;justify-content:space-between;margin-bottom:6px}
+.ew-number{font-family:'Fredoka One',cursive;font-size:18px;color:var(--green)}
+.ew-steps{list-style:none;display:flex;flex-direction:column;gap:4px;margin-top:8px}
+.ew-steps li{font-size:10px;color:var(--muted);display:flex;align-items:center;gap:6px}
+.ew-steps li::before{content:attr(data-n);width:15px;height:15px;background:var(--card3);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:8px;font-weight:900;color:var(--green);flex-shrink:0}
+
+/* Crypto */
+.cr-grid{display:grid;grid-template-columns:1fr 1fr;gap:7px;margin-bottom:12px}
+.cr-opt{background:var(--card2);border:1.5px solid var(--border);border-radius:9px;padding:9px 11px;cursor:pointer;display:flex;align-items:center;gap:7px;transition:all .2s;-webkit-tap-highlight-color:transparent}
+.cr-opt.sel{border-color:var(--gold)}
+.cr-icon{font-size:20px;flex-shrink:0}
+.cr-name{font-size:11px;font-weight:800}
+.cr-sym{font-size:9px;color:var(--muted)}
+.cr-box{background:var(--card2);border:1.5px solid var(--gold);border-radius:9px;padding:12px;display:none}
+.cr-box.on{display:block}
+.cr-lbl{font-size:9px;color:var(--muted);font-weight:700;text-transform:uppercase;margin-bottom:4px}
+.cr-addr{font-family:'Fredoka One',cursive;font-size:11px;color:var(--gold);word-break:break-all;margin-bottom:8px;line-height:1.5}
+.cr-warn{background:rgba(255,215,0,.05);border:1px solid rgba(255,215,0,.15);border-radius:7px;padding:8px 10px;font-size:9px;color:var(--gold);line-height:1.5}
+
+/* ORDER SUMMARY */
+.ord-sum{background:var(--card);border:1px solid var(--border);border-radius:16px;overflow:hidden;position:sticky;top:70px;z-index:2;align-self:start}
+.os-hd{padding:14px 18px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:8px}
+.os-hd h2{font-size:14px;font-weight:800}
+.os-body{padding:16px 18px}
+.os-items{display:flex;flex-direction:column;gap:8px;margin-bottom:12px}
+.os-item{display:flex;align-items:center;gap:8px}
+.os-item-ic{width:38px;height:38px;background:var(--card2);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0}
+.os-item-name{font-size:11px;font-weight:800;margin-bottom:1px}
+.os-item-meta{font-size:9px;color:var(--muted)}
+.os-item-price{font-family:'Fredoka One',cursive;font-size:13px;margin-left:auto;flex-shrink:0}
+.os-div{height:1px;background:var(--border);margin:10px 0}
+.promo-row{display:flex;gap:6px;margin-bottom:12px}
+.promo-inp{flex:1;padding:8px 10px;background:var(--card2);border:1.5px solid var(--border);border-radius:8px;color:var(--text);font-family:'Nunito',sans-serif;font-size:12px;font-weight:600;outline:none;transition:border-color .2s}
+.promo-inp:focus{border-color:var(--b1)}
+.promo-inp::placeholder{color:var(--muted)}
+.btn-promo{padding:8px 11px;background:var(--card2);border:1.5px solid var(--border);border-radius:8px;color:var(--muted);font-family:'Nunito',sans-serif;font-size:11px;font-weight:800;cursor:pointer;white-space:nowrap;transition:all .2s;-webkit-tap-highlight-color:transparent}
+.btn-promo:hover{border-color:var(--b1);color:var(--b1)}
+.os-row{display:flex;justify-content:space-between;font-size:11px;margin-bottom:5px}
+.os-row .lbl{color:var(--muted);font-weight:700}
+.os-row.tot{margin-top:8px;padding-top:8px;border-top:1px solid var(--border)}
+.os-row.tot .lbl{font-size:13px;color:var(--text)}
+.os-row.tot .val{font-family:'Fredoka One',cursive;font-size:20px}
+.btn-pay{width:100%;padding:13px;background:linear-gradient(135deg,var(--b1),var(--b2));color:#fff;border:none;border-radius:11px;font-family:'Nunito',sans-serif;font-size:14px;font-weight:900;cursor:pointer;transition:all .2s;display:flex;align-items:center;justify-content:center;gap:6px;margin-top:12px;-webkit-tap-highlight-color:transparent}
+.btn-pay:hover{opacity:.9;transform:translateY(-1px)}
+.btn-pay:disabled{opacity:.4;cursor:not-allowed;transform:none}
+.trust-mini{display:flex;justify-content:center;gap:12px;margin-top:10px;flex-wrap:wrap}
+.trust-mini span{font-size:10px;color:var(--muted);font-weight:700}
+
+/* SUCCESS */
+.succ-ov{position:fixed;inset:0;background:rgba(10,10,20,.97);z-index:200;display:flex;align-items:center;justify-content:center;padding:16px;opacity:0;pointer-events:none;transition:opacity .4s}
+.succ-ov.on{opacity:1;pointer-events:all}
+.succ-card{background:var(--card);border:1px solid var(--border);border-radius:20px;padding:32px 24px;max-width:380px;width:100%;text-align:center;transform:scale(.9);transition:transform .4s}
+.succ-ov.on .succ-card{transform:scale(1)}
+.succ-ic{font-size:56px;margin-bottom:12px;display:block}
+.succ-card h2{font-family:'Fredoka One',cursive;font-size:24px;margin-bottom:6px}
+.succ-card p{font-size:12px;color:var(--muted);line-height:1.6;margin-bottom:16px}
+.order-id{background:var(--card2);border:1px solid var(--border);border-radius:9px;padding:10px;font-family:'Fredoka One',cursive;font-size:18px;color:var(--gold);margin-bottom:14px;letter-spacing:1px}
+.btn-home{background:linear-gradient(135deg,var(--b1),var(--b2));color:#fff;border:none;border-radius:10px;padding:11px 24px;font-family:'Nunito',sans-serif;font-size:13px;font-weight:800;cursor:pointer;-webkit-tap-highlight-color:transparent}
+
+/* TOAST */
+.toast{position:fixed;bottom:20px;right:16px;padding:10px 16px;border-radius:9px;font-size:12px;font-weight:700;z-index:300;transform:translateY(70px);transition:transform .3s;max-width:280px}
+.toast.on{transform:translateY(0)}
+.toast.ok{background:linear-gradient(135deg,var(--b1),var(--b2));color:#fff}
+.toast.good{background:var(--green);color:#fff}
+.toast.warn{background:#f59e0b;color:#000}
+
+@media(max-width:600px){
+  .frow{grid-template-columns:1fr}
+  .foot-top{grid-template-columns:1fr 1fr}
+  .nav-links{display:none}
+  .rbx-grid,.prod-grid,.lim-grid{grid-template-columns:repeat(2,1fr)}
+}
+
+/* ===== PARTICLE CANVAS ===== */
+#particleCanvas{position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:0;opacity:0.35}
+.page,.flash-banner,.search-wrap{position:relative;z-index:1}
+
+/* ===== SCROLL REVEAL ===== */
+.reveal{opacity:0;transform:translateY(28px);transition:opacity .6s ease,transform .6s ease}
+.reveal.visible{opacity:1;transform:translateY(0)}
+
+/* ===== ENHANCED CARD HOVER GLOW ===== */
+.rbx-card:hover{transform:translateY(-5px) scale(1.02);border-color:rgba(139,92,246,.7);box-shadow:0 0 20px rgba(139,92,246,.25),0 8px 24px rgba(0,0,0,.3)}
+.prod-card:hover{transform:translateY(-5px) scale(1.02);border-color:rgba(59,130,246,.6);box-shadow:0 0 16px rgba(59,130,246,.2),0 8px 20px rgba(0,0,0,.3)}
+.acc-card:hover{transform:translateY(-5px);border-color:rgba(139,92,246,.6);box-shadow:0 0 18px rgba(139,92,246,.2)}
+.lim-card:hover{transform:translateY(-5px) scale(1.02);border-color:rgba(255,215,0,.5);box-shadow:0 0 20px rgba(255,215,0,.2)}
+
+/* ===== VERIFIED BADGE ===== */
+.verified-badge{display:inline-flex;align-items:center;gap:3px;background:rgba(59,130,246,.15);border:1px solid rgba(59,130,246,.4);border-radius:4px;padding:1px 5px;font-size:8px;font-weight:800;color:var(--b1)}
+
+/* ===== FLASH SALE BANNER ===== */
+.flash-banner{background:linear-gradient(135deg,#1a0a0a,#2a1010);border-top:1px solid rgba(255,59,59,.2);border-bottom:1px solid rgba(255,59,59,.2);padding:10px 16px;overflow:hidden}
+.flash-in{max-width:1200px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
+.flash-left{display:flex;align-items:center;gap:10px}
+.flash-icon{font-size:22px;animation:flashPulse 1s ease-in-out infinite alternate}
+@keyframes flashPulse{from{transform:scale(1)}to{transform:scale(1.2)}}
+.flash-text h3{font-family:'Fredoka One',cursive;font-size:16px;color:#ff6b6b}
+.flash-text p{font-size:11px;color:var(--muted)}
+.flash-timer{display:flex;align-items:center;gap:6px}
+.flash-unit{background:rgba(255,59,59,.15);border:1px solid rgba(255,59,59,.3);border-radius:7px;padding:5px 10px;text-align:center;min-width:44px}
+.flash-num{font-family:'Fredoka One',cursive;font-size:20px;color:#ff6b6b;line-height:1;display:block}
+.flash-lbl{font-size:8px;color:var(--muted);font-weight:700;text-transform:uppercase}
+.flash-colon{font-family:'Fredoka One',cursive;font-size:18px;color:#ff3b3b;animation:flashColon .5s step-end infinite}
+@keyframes flashColon{0%,100%{opacity:1}50%{opacity:0}}
+.flash-badge{background:linear-gradient(135deg,#ff3b3b,#ff8c00);color:#fff;font-size:11px;font-weight:900;padding:5px 14px;border-radius:20px;white-space:nowrap;cursor:pointer;border:none;font-family:'Nunito',sans-serif;transition:all .2s}
+.flash-badge:hover{opacity:.9;transform:scale(1.05)}
+
+/* ===== LIVE PURCHASE TICKER ===== */
+.ticker-wrap{position:fixed;bottom:70px;left:16px;z-index:100;pointer-events:none}
+.ticker-notif{background:var(--card);border:1px solid rgba(34,197,94,.3);border-radius:10px;padding:9px 13px;display:flex;align-items:center;gap:8px;font-size:11px;font-weight:700;max-width:260px;box-shadow:0 4px 16px rgba(0,0,0,.4);transform:translateX(-300px);transition:transform .4s cubic-bezier(.175,.885,.32,1.275),opacity .3s;opacity:0}
+.ticker-notif.show{transform:translateX(0);opacity:1}
+.ticker-dot{width:8px;height:8px;background:var(--green);border-radius:50%;animation:tickerPulse 1s ease-in-out infinite;flex-shrink:0}
+@keyframes tickerPulse{0%,100%{transform:scale(1);opacity:1}50%{transform:scale(1.4);opacity:.7}}
+.ticker-ic{font-size:20px;flex-shrink:0}
+.ticker-txt{color:var(--text)}
+.ticker-txt span{color:var(--green)}
+
+/* ===== SEARCH BAR ===== */
+.search-wrap{max-width:1200px;margin:0 auto;padding:0 16px 16px}
+.search-box{display:flex;gap:8px;background:var(--card);border:1.5px solid var(--border);border-radius:12px;padding:8px 14px;align-items:center;transition:border-color .2s}
+.search-box:focus-within{border-color:var(--b1)}
+.search-icon{font-size:16px;color:var(--muted)}
+.search-inp{flex:1;background:none;border:none;outline:none;color:var(--text);font-family:'Nunito',sans-serif;font-size:13px;font-weight:600}
+.search-inp::placeholder{color:var(--muted)}
+.search-clear{background:var(--card2);border:none;color:var(--muted);width:20px;height:20px;border-radius:50%;font-size:10px;cursor:pointer;display:none;align-items:center;justify-content:center}
+.search-clear.on{display:flex}
+.no-results{text-align:center;padding:32px 16px;color:var(--muted)}
+.no-results .no-ic{font-size:40px;margin-bottom:8px}
+.no-results p{font-size:13px;font-weight:700}
+
+/* ===== WISHLIST HEART ===== */
+.btn-wish{background:none;border:none;cursor:pointer;font-size:14px;padding:3px;transition:transform .2s;color:var(--muted);-webkit-tap-highlight-color:transparent}
+.btn-wish.active{color:#ff3b3b;animation:heartBeat .3s ease}
+@keyframes heartBeat{0%{transform:scale(1)}50%{transform:scale(1.4)}100%{transform:scale(1)}}
+
+/* ===== RIPPLE EFFECT ===== */
+.ripple-btn{position:relative;overflow:hidden}
+.ripple-wave{position:absolute;border-radius:50%;background:rgba(255,255,255,.3);transform:scale(0);animation:rippleAnim .5s linear;pointer-events:none}
+@keyframes rippleAnim{to{transform:scale(4);opacity:0}}
+
+/* ===== CART BOUNCE ===== */
+@keyframes cartBounce{0%,100%{transform:scale(1)}20%{transform:scale(1.35)}40%{transform:scale(.9)}60%{transform:scale(1.15)}80%{transform:scale(.97)}}
+.cart-bounce{animation:cartBounce .5s ease}
+
+/* ===== TESTIMONIALS ===== */
+.testi-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:14px}
+.testi-card{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:16px;transition:all .2s}
+.testi-card:hover{border-color:rgba(139,92,246,.3);transform:translateY(-2px)}
+.testi-hd{display:flex;align-items:center;gap:10px;margin-bottom:10px}
+.testi-av{width:40px;height:40px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0}
+.testi-name{font-size:13px;font-weight:800;margin-bottom:1px}
+.testi-date{font-size:10px;color:var(--muted)}
+.testi-stars{color:#ffd700;font-size:12px;letter-spacing:1px;margin-bottom:8px}
+.testi-text{font-size:12px;color:var(--muted);line-height:1.7}
+.testi-item{font-size:11px;font-weight:700;color:var(--b2);margin-top:8px}
+.rating-sum{display:flex;align-items:center;gap:14px;background:var(--card);border:1px solid var(--border);border-radius:14px;padding:16px 20px;margin-bottom:18px}
+.rating-big{font-family:'Fredoka One',cursive;font-size:48px;line-height:1;color:var(--gold)}
+.rating-meta{flex:1}
+.rating-stars-big{font-size:18px;color:#ffd700;letter-spacing:2px;margin-bottom:4px}
+.rating-count{font-size:11px;color:var(--muted);font-weight:700}
+.rating-bars{flex:2;display:flex;flex-direction:column;gap:4px}
+.rbar-row{display:flex;align-items:center;gap:8px;font-size:10px;color:var(--muted);font-weight:700}
+.rbar-track{flex:1;height:5px;background:var(--card2);border-radius:3px;overflow:hidden}
+.rbar-fill{height:100%;background:linear-gradient(90deg,var(--gold),#ff8c00);border-radius:3px;transition:width 1s ease}
+
+/* ===== CARA ORDER ===== */
+.order-steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px}
+.step-card{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:20px;text-align:center;position:relative;transition:all .2s}
+.step-card:hover{border-color:rgba(139,92,246,.4);transform:translateY(-3px)}
+.step-num{width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,var(--b1),var(--b2));color:#fff;font-family:'Fredoka One',cursive;font-size:18px;display:flex;align-items:center;justify-content:center;margin:0 auto 10px}
+.step-ic{font-size:28px;margin-bottom:8px}
+.step-title{font-family:'Fredoka One',cursive;font-size:15px;margin-bottom:5px}
+.step-desc{font-size:11px;color:var(--muted);line-height:1.6}
+.step-arrow{position:absolute;right:-12px;top:50%;transform:translateY(-50%);font-size:18px;color:var(--muted);z-index:2}
+@media(max-width:600px){.step-arrow{display:none}}
+
+/* ===== FAQ ACCORDION ===== */
+.faq-list{display:flex;flex-direction:column;gap:8px}
+.faq-item{background:var(--card);border:1px solid var(--border);border-radius:12px;overflow:hidden;transition:border-color .2s}
+.faq-item.open{border-color:rgba(139,92,246,.35)}
+.faq-q{display:flex;align-items:center;justify-content:space-between;padding:14px 18px;cursor:pointer;font-size:13px;font-weight:800;-webkit-tap-highlight-color:transparent}
+.faq-q:hover{background:rgba(255,255,255,.03)}
+.faq-arrow{font-size:16px;color:var(--muted);transition:transform .3s;flex-shrink:0}
+.faq-item.open .faq-arrow{transform:rotate(180deg);color:var(--b2)}
+.faq-a{max-height:0;overflow:hidden;transition:max-height .35s ease,padding .35s ease;font-size:12px;color:var(--muted);line-height:1.7;padding:0 18px}
+.faq-item.open .faq-a{max-height:200px;padding:0 18px 14px}
+
+/* ===== FLOATING WA BUTTON ===== */
+.wa-float{position:fixed;bottom:20px;right:20px;z-index:100;width:52px;height:52px;border-radius:50%;background:linear-gradient(135deg,#25d366,#128c7e);color:#fff;font-size:24px;display:flex;align-items:center;justify-content:center;cursor:pointer;box-shadow:0 4px 16px rgba(37,211,102,.4);transition:all .2s;text-decoration:none;border:none;animation:waFloat 3s ease-in-out infinite}
+@keyframes waFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}
+.wa-float:hover{transform:scale(1.1)!important;animation:none;box-shadow:0 6px 24px rgba(37,211,102,.6)}
+.wa-tooltip{position:absolute;right:62px;background:var(--card);border:1px solid var(--border);border-radius:8px;padding:6px 12px;font-size:11px;font-weight:700;white-space:nowrap;opacity:0;pointer-events:none;transition:opacity .2s;box-shadow:0 4px 12px rgba(0,0,0,.3)}
+.wa-float:hover .wa-tooltip{opacity:1}
+
+/* ===== CONFETTI ===== */
+#confettiCanvas{position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:199;display:none}
+
+/* ===== TYPEWRITER ===== */
+.typewriter{border-right:3px solid var(--b2);white-space:nowrap;overflow:hidden;display:inline-block;animation:typeBlink .7s step-end infinite}
+@keyframes typeBlink{from,to{border-color:var(--b2)}50%{border-color:transparent}}
+
+/* ===== HERO ENHANCED ===== */
+.hero-badge{display:inline-flex;align-items:center;gap:6px;background:rgba(139,92,246,.12);border:1px solid rgba(139,92,246,.3);border-radius:20px;padding:5px 14px;font-size:11px;font-weight:800;color:var(--b2);margin-bottom:16px;animation:fadeIn .8s ease}
+@keyframes fadeIn{from{opacity:0;transform:translateY(-10px)}to{opacity:1;transform:translateY(0)}}
+.hero-badge .dot{width:6px;height:6px;background:var(--green);border-radius:50%;animation:tickerPulse 1s ease-in-out infinite}
+
+/* ===== GRADIENT MESH BG ===== */
+.mesh-bg{position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:0;background:
+  radial-gradient(ellipse at 20% 20%, rgba(59,130,246,.07) 0%, transparent 50%),
+  radial-gradient(ellipse at 80% 80%, rgba(139,92,246,.07) 0%, transparent 50%),
+  radial-gradient(ellipse at 50% 50%, rgba(34,197,94,.03) 0%, transparent 70%)}
+</style>
+</head>
+<body>
+
+<canvas id="confettiCanvas"></canvas>
+<div class="mesh-bg"></div>
+<canvas id="particleCanvas"></canvas>
+
+<div class="ticker-wrap" id="tickerWrap">
+  <div class="ticker-notif" id="tickerNotif">
+    <div class="ticker-dot"></div>
+    <div class="ticker-ic" id="tickerIc">🎮</div>
+    <div class="ticker-txt" id="tickerTxt"><span>User123</span> baru saja membeli 1.700 Robux</div>
+  </div>
+</div>
+
+<a class="wa-float" href="https://wa.me/6281234567890" target="_blank" rel="noopener">
+  <div class="wa-tooltip">Chat Admin 24/7</div>
+  💬
+</a>
+
+<div class="toast" id="toast"></div>
+
+<div class="succ-ov" id="succOv">
+  <div class="succ-card">
+    <span class="succ-ic">🎉</span>
+    <h2 class="grad">Pembayaran Berhasil!</h2>
+    <p>Pesananmu sedang diproses. Kamu akan dihubungi via WhatsApp dalam <strong>5–15 menit</strong>.</p>
+    <div class="order-id" id="orderId">EXC-XXXXXXX</div>
+    <p style="font-size:10px;color:var(--muted);margin-bottom:16px">Simpan ID ini sebagai bukti transaksi.</p>
+    <button class="btn-home" onclick="goHome()">← Kembali ke Toko</button>
+  </div>
+</div>
+
+<div class="cart-ov" id="cartOv" onclick="closeCart()"></div>
+<div class="cart-sb" id="cartSb">
+  <div class="cart-hd">
+    <h3>🛒 Keranjang</h3>
+    <button class="cart-x" onclick="closeCart()">✕</button>
+  </div>
+  <div class="cart-items" id="cartItems">
+    <div class="cart-empty"><div class="ic">🛒</div><p style="font-weight:700;font-size:13px">Keranjang kosong</p><p style="font-size:11px">Tambah produk dulu!</p></div>
+  </div>
+  <div class="cart-ft">
+    <div class="cart-total"><span class="cart-total-lbl">Total</span><span class="cart-total-val grad" id="cartTotal">Rp 0</span></div>
+    <button class="btn-co" id="btnCo" onclick="goCheckout()" disabled>Checkout →</button>
+  </div>
+</div>
+
+<nav>
+  <div class="nav-in">
+    <div class="nav-logo" onclick="goHome()">
+      <img src="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAA0JCgsKCA0LCgsODg0PEyAVExISEyccHhcgLikxMC4pLSwzOko+MzZGNywtQFdBRkxOUlNSMj5aYVpQYEpRUk//2wBDAQ4ODhMREyYVFSZPNS01T09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT0//wAARCABQAFADASIAAhEBAxEB/8QAGwABAQEBAQEBAQAAAAAAAAAAAAQFAwIGAQf/xAAwEAABAwMBBAgGAwAAAAAAAAABAAIDBBESBRMVIVMUIjEyUVJxkkFhgZGT0XKx4f/EABgBAAMBAQAAAAAAAAAAAAAAAAACAwEE/8QAJBEAAgIBAwMFAQAAAAAAAAAAAQIAAxEEEjETITNBQlFhgVL/2gAMAwEAAhEDEQA/AP5siIsmwiIiEIiIhCIiIQiIiEIitotNfWQmRsrWgOxsQU6IznCxHdUGWMiRau45eez2lcKvTX0ojyla7aPx4A8FRtPYoyRJrqKmOAZCi1txy8+P2leH6JO1pLJY3nw4i606a3+Zg1VJ90zEXaClmnnMLGWcO9fhj6q/ccvPj9pSJTY4yojvfWhwxmUi0KrSn01O6Z0rHBvwAKz0r1shwwjJYtgyphbmignT5Q3vZG3rYLDW7ouW75cO9kbetgr6Pyzn1ninDomrc8/lUtXHWRyxx1Epc4m7evex7FVtNZ8j/a1TzitdUQSVjXDrBrSQB8fknsC7ewb9i1lt3cr+Sjomrc8/lVVBT18c5dUzZR2tYuyuV+axVTU2y2L8ci6/AHwXqOZ+oaY7ZPLJgLGxtx/1dCqi2FQTkfc5maxqwxAAP1xPVJNC7UqtjCMiW/WwsVNNR6nm50dVkCeFn2WVBBPJIRAx5ezibcCFex2ss7BKf5AFSW3euGU+vEs1XTbKsPTmT1Yr4mY1TpcHeLrgqNfRyGR+kyGta1r8Dcf19V84oaivYQc8/PMvprN4Ixx8cQq6TUJqSIxxtYQTfrBSIoK7IcqZZkVxhhNLfVT5Ivsf2uNTqM1Ts82sGDshYHtUaKhvsYYJiLRWpyBKayulrMNq1gwvbEeK80lXLSPLorHIWIPYVwRJ1G3bs943TXbsx2lkeoyx1Mk7I4w6QDIWNvVdt9VPki+x/azUTi+wcGKaKzyJVVV9RVNxkcAzytFgpURTZixyxlFVVGFGIRESzYRERCEREQhEREIRERNn/9k=" alt="EXC"/>
+      <span class="nav-logo-name grad">EXCMarket</span>
+    </div>
+    <div class="nav-links" id="navLinks">
+      <button class="nav-link" onclick="scrollTo2('robux')">Robux</button>
+      <button class="nav-link" onclick="scrollTo2('akun')">Akun</button>
+      <button class="nav-link" onclick="scrollTo2('limited')">Limited</button>
+      <button class="nav-link" onclick="scrollTo2('items')">Items</button>
+    </div>
+    <button class="nav-cart" onclick="openCart()">
+      🛒 Keranjang
+      <span class="cart-dot" id="cartDot">0</span>
+    </button>
+  </div>
+</nav>
+
+<!-- ===== PAGE STORE ===== -->
+<div class="page on" id="pageStore">
+
+<div class="hero">
+  <div class="hero-badge"><div class="dot"></div> ✅ Terpercaya sejak 2021 · 15K+ Transaksi</div>
+  <h1>Top Up Roblox<br/><span class="grad typewriter" id="typewriterEl">Tercepat & Termurah</span></h1>
+  <p>Beli Robux, akun premium, limited items, dan in-game items dengan harga terbaik.</p>
+  <div class="hero-btns">
+    <button class="btn-p primary" onclick="scrollTo2('robux')">Beli Robux</button>
+    <button class="btn-p sec" onclick="scrollTo2('akun')">Lihat Akun</button>
+  </div>
+  <div class="stats">
+    <div><div class="stat-n grad">15K+</div><div class="stat-l">Transaksi</div></div>
+    <div><div class="stat-n grad">4.9★</div><div class="stat-l">Rating</div></div>
+    <div><div class="stat-n grad">&lt;5 Min</div><div class="stat-l">Proses</div></div>
+    <div><div class="stat-n grad">24/7</div><div class="stat-l">Support</div></div>
+  </div>
+</div>
+
+<!-- FLASH SALE BANNER -->
+<div class="flash-banner reveal">
+  <div class="flash-in">
+    <div class="flash-left">
+      <div class="flash-icon">⚡</div>
+      <div class="flash-text">
+        <h3>⚡ FLASH SALE — Diskon 20%!</h3>
+        <p>Promo terbatas untuk semua paket Robux</p>
+      </div>
+    </div>
+    <div class="flash-timer">
+      <div class="flash-unit"><span class="flash-num" id="fsH">00</span><span class="flash-lbl">Jam</span></div>
+      <div class="flash-colon">:</div>
+      <div class="flash-unit"><span class="flash-num" id="fsM">00</span><span class="flash-lbl">Min</span></div>
+      <div class="flash-colon">:</div>
+      <div class="flash-unit"><span class="flash-num" id="fsS">00</span><span class="flash-lbl">Det</span></div>
+    </div>
+    <button class="flash-badge" onclick="scrollTo2('robux')">Beli Sekarang →</button>
+  </div>
+</div>
+
+<!-- SEARCH BAR -->
+<div class="search-wrap reveal">
+  <div class="search-box">
+    <span class="search-icon">🔍</span>
+    <input class="search-inp" id="searchInp" type="text" placeholder="Cari Robux, akun, limited items..." oninput="onSearch(this.value)"/>
+    <button class="search-clear" id="searchClear" onclick="clearSearch()">✕</button>
+  </div>
+</div>
+
+<div class="sec reveal" id="robux">
+  <div class="sec-hd">
+    <div class="sec-title">Paket Robux <span class="sec-badge">Murah</span></div>
+  </div>
+  <div class="rbx-grid" id="rbxGrid"></div>
+</div>
+
+<div class="sec reveal" id="akun">
+  <div class="sec-hd"><div class="sec-title">👤 Akun Roblox</div></div>
+  <div class="cat-tabs">
+    <button class="cat-tab on" onclick="setTab(this)">Semua</button>
+    <button class="cat-tab" onclick="setTab(this)">Premium</button>
+    <button class="cat-tab" onclick="setTab(this)">OG Username</button>
+  </div>
+  <div class="acc-grid">
+    <div class="acc-card" onclick="buyNow('Akun ShadowX99','🎮',750000,'Akun Premium • 47 Items')">
+      <div class="acc-hd"><div class="acc-av" style="background:linear-gradient(135deg,#3b82f6,#8b5cf6)">🎮</div><div class="acc-info"><h3>ShadowX99 <span class="verified-badge">✓ Verified</span></h3><span>2019 • Premium</span></div></div>
+      <div class="acc-stats"><div class="acc-s"><div class="acc-sv grad">2.4K</div><div class="acc-sk">Robux</div></div><div class="acc-s"><div class="acc-sv">47</div><div class="acc-sk">Items</div></div><div class="acc-s"><div class="acc-sv">8</div><div class="acc-sk">Rare</div></div></div>
+      <div class="acc-tags"><span class="acc-tag l">Dominus</span><span class="acc-tag r">Korblox</span><span class="acc-tag">Premium</span></div>
+      <div class="acc-ft"><div class="acc-price grad">Rp 750.000</div><button class="btn-sm grad-bg" onclick="event.stopPropagation();buyNow('Akun ShadowX99','🎮',750000,'Akun Premium')">Beli</button></div>
+    </div>
+    <div class="acc-card" onclick="buyNow('Akun CoolDude2018','⭐',420000,'OG Roblox • 23 Items')">
+      <div class="acc-hd"><div class="acc-av" style="background:linear-gradient(135deg,#22c55e,#0ea5e9)">⭐</div><div class="acc-info"><h3>CoolDude2018</h3><span>2018 • OG</span></div></div>
+      <div class="acc-stats"><div class="acc-s"><div class="acc-sv grad">800</div><div class="acc-sk">Robux</div></div><div class="acc-s"><div class="acc-sv">23</div><div class="acc-sk">Items</div></div><div class="acc-s"><div class="acc-sv">3</div><div class="acc-sk">Rare</div></div></div>
+      <div class="acc-tags"><span class="acc-tag">OG Name</span><span class="acc-tag r">Headless</span></div>
+      <div class="acc-ft"><div class="acc-price grad">Rp 420.000</div><button class="btn-sm grad-bg" onclick="event.stopPropagation();buyNow('Akun CoolDude2018','⭐',420000,'OG Roblox')">Beli</button></div>
+    </div>
+    <div class="acc-card" onclick="buyNow('Akun NoobMaster69','👑',2500000,'High Value • 120 Items')">
+      <div class="acc-hd"><div class="acc-av" style="background:linear-gradient(135deg,#ffd700,#ff8c00)">👑</div><div class="acc-info"><h3>NoobMaster69 <span class="verified-badge">✓ Verified</span></h3><span>2020 • High Value</span></div></div>
+      <div class="acc-stats"><div class="acc-s"><div class="acc-sv grad">12K</div><div class="acc-sk">Robux</div></div><div class="acc-s"><div class="acc-sv">120</div><div class="acc-sk">Items</div></div><div class="acc-s"><div class="acc-sv">25</div><div class="acc-sk">Rare</div></div></div>
+      <div class="acc-tags"><span class="acc-tag l">Dominus</span><span class="acc-tag r">Headless</span><span class="acc-tag">+118</span></div>
+      <div class="acc-ft"><div class="acc-price grad">Rp 2.500.000</div><button class="btn-sm grad-bg" onclick="event.stopPropagation();buyNow('Akun NoobMaster69','👑',2500000,'High Value')">Beli</button></div>
+    </div>
+  </div>
+</div>
+
+<div class="sec reveal" id="limited">
+  <div class="sec-hd"><div class="sec-title">💎 Limited Items <span class="sec-badge">Rare</span></div></div>
+  <div class="lim-grid">
+    <div class="lim-card" onclick="buyNow('Dominus Aureus','🎩',850000,'Limited • RAP 12.5M')"><div class="lim-img">🎩</div><div class="lim-body"><div class="lim-name">Dominus Aureus</div><div class="lim-rap">RAP: <span>12.500.000</span></div><div class="lim-ft"><div class="lim-price">Rp 850.000</div><div class="lim-stk">Stok: 2</div></div></div></div>
+    <div class="lim-card" onclick="buyNow('Headless Horseman','🐴',320000,'Limited • RAP 85K')"><div class="lim-img">🐴</div><div class="lim-body"><div class="lim-name">Headless Horseman</div><div class="lim-rap">RAP: <span>85.000</span></div><div class="lim-ft"><div class="lim-price">Rp 320.000</div><div class="lim-stk">Stok: 5</div></div></div></div>
+    <div class="lim-card" onclick="buyNow('Korblox Deathspeaker','💀',250000,'Limited • RAP 65K')"><div class="lim-img">💀</div><div class="lim-body"><div class="lim-name">Korblox Deathspeaker</div><div class="lim-rap">RAP: <span>65.000</span></div><div class="lim-ft"><div class="lim-price">Rp 250.000</div><div class="lim-stk">Stok: 3</div></div></div></div>
+    <div class="lim-card" onclick="buyNow('Ice Crown','👑',95000,'Limited • RAP 28K')"><div class="lim-img">👑</div><div class="lim-body"><div class="lim-name">Ice Crown</div><div class="lim-rap">RAP: <span>28.000</span></div><div class="lim-ft"><div class="lim-price">Rp 95.000</div><div class="lim-stk">Stok: 10</div></div></div></div>
+    <div class="lim-card" onclick="buyNow('Sorcus Sword','⚔️',140000,'Limited • RAP 35K')"><div class="lim-img">⚔️</div><div class="lim-body"><div class="lim-name">Sorcus Sword</div><div class="lim-rap">RAP: <span>35.000</span></div><div class="lim-ft"><div class="lim-price">Rp 140.000</div><div class="lim-stk">Stok: 4</div></div></div></div>
+    <div class="lim-card" onclick="buyNow('Bling Fedora','🤠',180000,'Limited • RAP 45K')"><div class="lim-img">🤠</div><div class="lim-body"><div class="lim-name">Bling Fedora</div><div class="lim-rap">RAP: <span>45.000</span></div><div class="lim-ft"><div class="lim-price">Rp 180.000</div><div class="lim-stk">Stok: 7</div></div></div></div>
+  </div>
+</div>
+
+<div class="sec reveal" id="items">
+  <div class="sec-hd"><div class="sec-title">🎮 In-Game Items</div></div>
+  <div class="cat-tabs">
+    <button class="cat-tab on" onclick="setTab(this)">Semua</button>
+    <button class="cat-tab" onclick="setTab(this)">Adopt Me</button>
+    <button class="cat-tab" onclick="setTab(this)">Blox Fruits</button>
+    <button class="cat-tab" onclick="setTab(this)">MM2</button>
+  </div>
+  <div class="prod-grid">
+    <div class="prod-card"><div class="prod-img" style="background:linear-gradient(135deg,#1a2a4a,#2a1a4a)">🐉<span class="ptag rare">Rare</span></div><div class="prod-body"><div class="prod-name">Dragon (Neon)</div><div class="prod-meta">Adopt Me • Pet</div><div class="prod-ft"><div class="prod-price grad">Rp 120.000</div><div style="display:flex;gap:4px"><button class="btn-sm out" onclick="addToCart('Dragon Neon','🐉',120000,'Adopt Me')">+🛒</button><button class="btn-sm grad-bg" onclick="buyNow('Dragon Neon','🐉',120000,'Adopt Me • Pet')">Beli</button></div></div></div></div>
+    <div class="prod-card"><div class="prod-img" style="background:linear-gradient(135deg,#2a1a1a,#4a2a1a)">🦊<span class="ptag hot">Hot</span></div><div class="prod-body"><div class="prod-name">Kitsune</div><div class="prod-meta">Adopt Me • Pet</div><div class="prod-ft"><div class="prod-price grad">Rp 85.000</div><div style="display:flex;gap:4px"><button class="btn-sm out" onclick="addToCart('Kitsune','🦊',85000,'Adopt Me')">+🛒</button><button class="btn-sm grad-bg" onclick="buyNow('Kitsune','🦊',85000,'Adopt Me • Pet')">Beli</button></div></div></div></div>
+    <div class="prod-card"><div class="prod-img" style="background:linear-gradient(135deg,#1a2a1a,#2a4a1a)">🍎<span class="ptag new">New</span></div><div class="prod-body"><div class="prod-name">Gum-Gum Fruit</div><div class="prod-meta">Blox Fruits</div><div class="prod-ft"><div class="prod-price grad">Rp 55.000</div><div style="display:flex;gap:4px"><button class="btn-sm out" onclick="addToCart('Gum-Gum Fruit','🍎',55000,'Blox Fruits')">+🛒</button><button class="btn-sm grad-bg" onclick="buyNow('Gum-Gum Fruit','🍎',55000,'Blox Fruits')">Beli</button></div></div></div></div>
+    <div class="prod-card"><div class="prod-img" style="background:linear-gradient(135deg,#1a1a2a,#2a1a4a)">🔪<span class="ptag lim">Lim</span></div><div class="prod-body"><div class="prod-name">Godly Knife</div><div class="prod-meta">Murder Mystery 2</div><div class="prod-ft"><div class="prod-price grad">Rp 45.000</div><div style="display:flex;gap:4px"><button class="btn-sm out" onclick="addToCart('Godly Knife','🔪',45000,'MM2')">+🛒</button><button class="btn-sm grad-bg" onclick="buyNow('Godly Knife','🔪',45000,'MM2 • Weapon')">Beli</button></div></div></div></div>
+    <div class="prod-card"><div class="prod-img" style="background:linear-gradient(135deg,#0d0d0d,#1a0a2a)">🖤<span class="ptag rare">Rare</span></div><div class="prod-body"><div class="prod-name">Shadow Dragon</div><div class="prod-meta">Adopt Me • Pet</div><div class="prod-ft"><div class="prod-price grad">Rp 200.000</div><div style="display:flex;gap:4px"><button class="btn-sm out" onclick="addToCart('Shadow Dragon','🖤',200000,'Adopt Me')">+🛒</button><button class="btn-sm grad-bg" onclick="buyNow('Shadow Dragon','🖤',200000,'Adopt Me • Pet')">Beli</button></div></div></div></div>
+    <div class="prod-card"><div class="prod-img" style="background:linear-gradient(135deg,#2a2a0a,#3a3a0a)">⚡<span class="ptag hot">Hot</span></div><div class="prod-body"><div class="prod-name">Light Fruit</div><div class="prod-meta">Blox Fruits</div><div class="prod-ft"><div class="prod-price grad">Rp 75.000</div><div style="display:flex;gap:4px"><button class="btn-sm out" onclick="addToCart('Light Fruit','⚡',75000,'Blox Fruits')">+🛒</button><button class="btn-sm grad-bg" onclick="buyNow('Light Fruit','⚡',75000,'Blox Fruits')">Beli</button></div></div></div></div>
+  </div>
+</div>
+
+<!-- ===== CARA ORDER ===== -->
+<div class="sec reveal" id="cara-order">
+  <div class="sec-hd">
+    <div class="sec-title">📋 Cara Order <span class="sec-badge">Mudah</span></div>
+  </div>
+  <div class="order-steps">
+    <div class="step-card">
+      <div class="step-num">1</div>
+      <div class="step-ic">🛒</div>
+      <div class="step-title">Pilih Produk</div>
+      <div class="step-desc">Pilih paket Robux, akun, atau item yang kamu inginkan lalu klik tombol Beli.</div>
+      <div class="step-arrow">›</div>
+    </div>
+    <div class="step-card">
+      <div class="step-num">2</div>
+      <div class="step-ic">📝</div>
+      <div class="step-title">Isi Data</div>
+      <div class="step-desc">Masukkan username Roblox dan nomor WhatsApp aktif kamu dengan benar.</div>
+      <div class="step-arrow">›</div>
+    </div>
+    <div class="step-card">
+      <div class="step-num">3</div>
+      <div class="step-ic">💳</div>
+      <div class="step-title">Bayar</div>
+      <div class="step-desc">Bayar via QRIS, Transfer Bank, E-Wallet, atau Crypto. Upload bukti bayar.</div>
+      <div class="step-arrow">›</div>
+    </div>
+    <div class="step-card">
+      <div class="step-num">4</div>
+      <div class="step-ic">⚡</div>
+      <div class="step-title">Item Diterima!</div>
+      <div class="step-desc">Admin proses dalam 5–15 menit. Notifikasi dikirim via WhatsApp kamu.</div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== TESTIMONIALS ===== -->
+<div class="sec reveal" id="ulasan">
+  <div class="sec-hd">
+    <div class="sec-title">⭐ Ulasan Pembeli <span class="sec-badge">Terbukti</span></div>
+    <div style="font-size:12px;color:var(--muted);font-weight:700">2.847 ulasan</div>
+  </div>
+  <div class="rating-sum">
+    <div class="rating-big">4.9</div>
+    <div class="rating-meta">
+      <div class="rating-stars-big">★★★★★</div>
+      <div class="rating-count">Berdasarkan 2.847 ulasan</div>
+    </div>
+    <div class="rating-bars">
+      <div class="rbar-row">5★ <div class="rbar-track"><div class="rbar-fill" style="width:92%"></div></div> 92%</div>
+      <div class="rbar-row">4★ <div class="rbar-track"><div class="rbar-fill" style="width:6%"></div></div> 6%</div>
+      <div class="rbar-row">3★ <div class="rbar-track"><div class="rbar-fill" style="width:2%"></div></div> 2%</div>
+      <div class="rbar-row">2★ <div class="rbar-track"><div class="rbar-fill" style="width:0%"></div></div> 0%</div>
+      <div class="rbar-row">1★ <div class="rbar-track"><div class="rbar-fill" style="width:0%"></div></div> 0%</div>
+    </div>
+  </div>
+  <div class="testi-grid">
+    <div class="testi-card">
+      <div class="testi-hd">
+        <div class="testi-av" style="background:linear-gradient(135deg,#3b82f6,#8b5cf6)">😊</div>
+        <div><div class="testi-name">RyuPlayer_21</div><div class="testi-date">2 jam lalu</div></div>
+      </div>
+      <div class="testi-stars">★★★★★</div>
+      <div class="testi-text">Pesanan masuk dalam 7 menit! Admin ramah banget dan responsif. Sudah beli 3x di sini dan gak pernah kecewa. Recommended banget!</div>
+      <div class="testi-item">✓ 1.700 Robux</div>
+    </div>
+    <div class="testi-card">
+      <div class="testi-hd">
+        <div class="testi-av" style="background:linear-gradient(135deg,#22c55e,#0ea5e9)">🎮</div>
+        <div><div class="testi-name">Zara_Gaming</div><div class="testi-date">5 jam lalu</div></div>
+      </div>
+      <div class="testi-stars">★★★★★</div>
+      <div class="testi-text">Akun yang dibeli sesuai deskripsi, semua item ada. Harga paling murah dibanding toko lain yang udah saya cari. Auto jadi langganan!</div>
+      <div class="testi-item">✓ Akun ShadowX99</div>
+    </div>
+    <div class="testi-card">
+      <div class="testi-hd">
+        <div class="testi-av" style="background:linear-gradient(135deg,#ffd700,#ff8c00)">👑</div>
+        <div><div class="testi-name">FandiBlox_ID</div><div class="testi-date">1 hari lalu</div></div>
+      </div>
+      <div class="testi-stars">★★★★★</div>
+      <div class="testi-text">Beli Dominus Aureus di sini. Harga jauh lebih murah dari seller lain. Prosesnya cepat dan aman. Terima kasih EXCMarket!</div>
+      <div class="testi-item">✓ Dominus Aureus</div>
+    </div>
+    <div class="testi-card">
+      <div class="testi-hd">
+        <div class="testi-av" style="background:linear-gradient(135deg,#ec4899,#8b5cf6)">🌸</div>
+        <div><div class="testi-name">Nabilah_Rblx</div><div class="testi-date">2 hari lalu</div></div>
+      </div>
+      <div class="testi-stars">★★★★★</div>
+      <div class="testi-text">Udah beli berkali-kali, selalu aman dan cepat. Kode promo EXCMURAH beneran jalan! Hemat banget. Paling rekomen!</div>
+      <div class="testi-item">✓ 4.500 Robux</div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== FAQ ACCORDION ===== -->
+<div class="sec reveal" id="faq">
+  <div class="sec-hd">
+    <div class="sec-title">❓ FAQ <span class="sec-badge">Bantuan</span></div>
+  </div>
+  <div class="faq-list">
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)"><span>Berapa lama proses top up setelah pembayaran?</span><span class="faq-arrow">▼</span></div>
+      <div class="faq-a">Proses berlangsung dalam <strong>5–15 menit</strong> setelah pembayaran dikonfirmasi. Pada jam sibuk bisa memakan waktu hingga 30 menit. Kamu akan mendapat notifikasi via WhatsApp.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)"><span>Apakah top up Robux aman untuk akun saya?</span><span class="faq-arrow">▼</span></div>
+      <div class="faq-a">Kami menggunakan metode yang aman dan tidak memerlukan password akun kamu. Namun perlu diketahui bahwa membeli Robux dari pihak ketiga tetap memiliki risiko sesuai ToS Roblox.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)"><span>Metode pembayaran apa saja yang diterima?</span><span class="faq-arrow">▼</span></div>
+      <div class="faq-a">Kami menerima <strong>QRIS</strong> (GoPay, OVO, DANA, ShopeePay), <strong>Transfer Bank</strong> (BCA, BRI, Mandiri), <strong>E-Wallet</strong>, dan <strong>Cryptocurrency</strong> (BTC, ETH, USDT, BNB).</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)"><span>Bagaimana jika pesanan tidak masuk setelah 30 menit?</span><span class="faq-arrow">▼</span></div>
+      <div class="faq-a">Hubungi admin via WhatsApp dengan menyertakan <strong>ID Order</strong> dan <strong>bukti pembayaran</strong>. Kami memiliki kebijakan <strong>garansi refund 100%</strong> jika pesanan tidak bisa diproses.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)"><span>Apakah ada diskon untuk pembelian dalam jumlah besar?</span><span class="faq-arrow">▼</span></div>
+      <div class="faq-a">Tersedia kode promo spesial! Gunakan kode <strong>EXCMURAH</strong> (hemat Rp 10.000), <strong>NEWUSER</strong> (hemat Rp 15.000 untuk member baru), atau ikuti flash sale di bagian atas halaman.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)"><span>Apakah akun yang dijual sudah diverifikasi?</span><span class="faq-arrow">▼</span></div>
+      <div class="faq-a">Ya! Semua akun dengan badge <span class="verified-badge">✓ Verified</span> sudah melalui proses verifikasi. Kamu mendapatkan garansi akses akun dan semua item sesuai deskripsi.</div>
+    </div>
+  </div>
+</div>
+
+<div class="trust reveal">
+  <div class="trust-in">
+    <div class="trust-item"><div class="trust-icon">⚡</div><div class="trust-text"><h4>Proses Cepat</h4><p>5–15 menit setelah bayar</p></div></div>
+    <div class="trust-item"><div class="trust-icon">🔒</div><div class="trust-text"><h4>100% Aman</h4><p>Transaksi terenkripsi SSL</p></div></div>
+    <div class="trust-item"><div class="trust-icon">💬</div><div class="trust-text"><h4>Support 24/7</h4><p>Siap bantu kapanpun</p></div></div>
+    <div class="trust-item"><div class="trust-icon">✅</div><div class="trust-text"><h4>Garansi Refund</h4><p>Uang kembali jika ada kendala</p></div></div>
+  </div>
+</div>
+
+<footer>
+  <div class="foot-in">
+    <div class="foot-top">
+      <div class="foot-brand">
+        <span class="grad" style="font-family:'Fredoka One',cursive;font-size:18px">EXCMarket</span>
+        <p>Platform top up Roblox terpercaya di Indonesia.</p>
+      </div>
+      <div class="foot-col"><h4>Produk</h4><a href="#">Robux</a><a href="#">Akun</a><a href="#">Limited</a><a href="#">Items</a></div>
+      <div class="foot-col"><h4>Bantuan</h4><a href="#">FAQ</a><a href="#">Kontak</a><a href="#">Refund</a></div>
+    </div>
+    <div class="foot-bottom">
+      <p>© 2025 EXCMarket</p>
+      <p class="foot-disc">⚠️ Website ini untuk keperluan portofolio. Menjual akun/Robux dapat melanggar ToS Roblox.</p>
+    </div>
+  </div>
+</footer>
+</div><!-- end pageStore -->
+
+<!-- ===== PAGE CHECKOUT ===== -->
+<div class="page" id="pageCheckout">
+<button class="back-btn" onclick="goHome()">← Kembali</button>
+<div class="co-wrap">
+  <div class="co-panel">
+    <div class="co-card">
+      <div class="co-hd"><div class="co-num">1</div><h2>Informasi Kontak</h2></div>
+      <div class="co-body">
+        <div class="frow">
+          <div class="fld"><label>Username Roblox</label><input type="text" id="rbxUser" placeholder="CoolPlayer123"/></div>
+          <div class="fld"><label>Nomor WhatsApp</label><input type="text" id="waNum" placeholder="08xxxxxxxxxx"/></div>
+        </div>
+        <div class="frow">
+          <div class="fld"><label>Email</label><input type="email" id="emailIn" placeholder="email@contoh.com"/></div>
+          <div class="fld"><label>Platform</label>
+            <select id="platform"><option value="">Pilih platform</option><option>WhatsApp</option><option>Telegram</option><option>Discord</option></select>
+          </div>
+        </div>
+        <div class="frow s1"><div class="fld"><label>Catatan (opsional)</label><input type="text" id="notes" placeholder="Catatan untuk penjual..."/></div></div>
+      </div>
+    </div>
+
+    <div class="co-card">
+      <div class="co-hd"><div class="co-num">2</div><h2>Metode Pembayaran</h2></div>
+      <div class="co-body">
+        <div class="pm-tabs">
+          <div class="pm-tab on" onclick="switchPM('qris',this)"><div class="pm-tab-ic">⬛</div><div class="pm-tab-lbl">QRIS</div></div>
+          <div class="pm-tab" onclick="switchPM('bank',this)"><div class="pm-tab-ic">🏦</div><div class="pm-tab-lbl">Transfer</div></div>
+          <div class="pm-tab" onclick="switchPM('ew',this)"><div class="pm-tab-ic">📱</div><div class="pm-tab-lbl">E-Wallet</div></div>
+          <div class="pm-tab" onclick="switchPM('cr',this)"><div class="pm-tab-ic">₿</div><div class="pm-tab-lbl">Crypto</div></div>
+        </div>
+
+        <div class="pm-cont on" id="pm-qris">
+          <div class="timer-row"><div><div class="timer-lbl">⏱ QR kadaluarsa dalam</div></div><div class="timer-val" id="timerVal">14:59</div></div>
+          <div class="qr-box"><canvas id="qrCanvas" width="160" height="160"></canvas></div>
+          <div class="qr-amount grad" id="qrAmt">Rp 0</div>
+          <div class="qr-note">Scan QR menggunakan aplikasi yang mendukung QRIS</div>
+          <div class="qr-apps"><span class="qr-app">GoPay</span><span class="qr-app">OVO</span><span class="qr-app">DANA</span><span class="qr-app">ShopeePay</span></div>
+        </div>
+
+        <div class="pm-cont" id="pm-bank">
+          <div class="bank-list">
+            <div class="bank-opt" onclick="selBank(this)"><div class="bk-logo bca">BCA</div><div class="bk-info"><div class="bk-name">Bank BCA</div><div class="bk-num">1234-5678-90</div><div class="bk-hold">a.n. EXC MARKET</div></div><button class="btn-cp" onclick="event.stopPropagation();cp(this,'1234567890')">Salin</button></div>
+            <div class="bank-opt" onclick="selBank(this)"><div class="bk-logo bri">BRI</div><div class="bk-info"><div class="bk-name">Bank BRI</div><div class="bk-num">0987-6543-21</div><div class="bk-hold">a.n. EXC MARKET</div></div><button class="btn-cp" onclick="event.stopPropagation();cp(this,'0987654321')">Salin</button></div>
+            <div class="bank-opt" onclick="selBank(this)"><div class="bk-logo mdr">MDR</div><div class="bk-info"><div class="bk-name">Bank Mandiri</div><div class="bk-num">1122-3344-55</div><div class="bk-hold">a.n. EXC MARKET</div></div><button class="btn-cp" onclick="event.stopPropagation();cp(this,'1122334455')">Salin</button></div>
+          </div>
+          <div class="bank-note">⚠️ <strong>Penting:</strong> Transfer nominal persis. Upload bukti setelah bayar.</div>
+          <div class="up-zone" onclick="document.getElementById('pfBank').click()"><div class="up-icon">📎</div><div class="up-text">Upload <span>bukti transfer</span></div></div>
+          <input type="file" id="pfBank" accept="image/*" style="display:none" onchange="prevProof(this,'pvBank','pvBankImg')"/>
+          <div class="up-prev" id="pvBank"><img id="pvBankImg" src="" alt=""/><div style="font-size:10px;color:var(--green);font-weight:700;margin-top:4px">✓ Terupload</div></div>
+        </div>
+
+        <div class="pm-cont" id="pm-ew">
+          <div class="ew-grid">
+            <div class="ew-opt" onclick="selEw(this,'GoPay','081234567890')"><div class="ew-icon">💚</div><div class="ew-name">GoPay</div></div>
+            <div class="ew-opt" onclick="selEw(this,'OVO','081234567890')"><div class="ew-icon">💜</div><div class="ew-name">OVO</div></div>
+            <div class="ew-opt" onclick="selEw(this,'DANA','081234567890')"><div class="ew-icon">💙</div><div class="ew-name">DANA</div></div>
+          </div>
+          <div class="ew-detail" id="ewDetail">
+            <div class="ew-num-row"><div><div style="font-size:9px;color:var(--muted);font-weight:700;text-transform:uppercase;margin-bottom:2px">Nomor <span id="ewName">GoPay</span></div><div class="ew-number" id="ewNum">081234567890</div></div><button class="btn-cp" onclick="cp(this,document.getElementById('ewNum').textContent)">Salin</button></div>
+            <div style="font-size:10px;color:var(--muted)">a.n. <strong style="color:var(--text)">EXC MARKET</strong></div>
+            <ul class="ew-steps"><li data-n="1">Buka aplikasi e-wallet</li><li data-n="2">Pilih Transfer / Kirim</li><li data-n="3">Masukkan nomor & nominal</li><li data-n="4">Screenshot & upload bukti</li></ul>
+          </div>
+          <div class="up-zone" style="margin-top:10px" onclick="document.getElementById('pfEw').click()"><div class="up-icon">📎</div><div class="up-text">Upload <span>bukti transfer</span></div></div>
+          <input type="file" id="pfEw" accept="image/*" style="display:none" onchange="prevProof(this,'pvEw','pvEwImg')"/>
+          <div class="up-prev" id="pvEw"><img id="pvEwImg" src="" alt=""/><div style="font-size:10px;color:var(--green);font-weight:700;margin-top:4px">✓ Terupload</div></div>
+        </div>
+
+        <div class="pm-cont" id="pm-cr">
+          <div class="cr-grid">
+            <div class="cr-opt" onclick="selCr(this,'Bitcoin BTC','1A2b3C4d5E6f7G8h9I0jKlMnOpQrStUvWx')"><div class="cr-icon">₿</div><div><div class="cr-name">Bitcoin</div><div class="cr-sym">BTC</div></div></div>
+            <div class="cr-opt" onclick="selCr(this,'Ethereum ETH','0x1a2B3c4D5e6F7g8H9i0J1k2L3m4N5o6P7q8')"><div class="cr-icon">Ξ</div><div><div class="cr-name">Ethereum</div><div class="cr-sym">ETH</div></div></div>
+            <div class="cr-opt" onclick="selCr(this,'USDT TRC-20','TRX1a2B3c4D5e6F7g8H9i0J1k2L3m4N5o6P')"><div class="cr-icon">💵</div><div><div class="cr-name">USDT</div><div class="cr-sym">TRC-20</div></div></div>
+            <div class="cr-opt" onclick="selCr(this,'BNB BSC','bnb1a2b3c4d5e6f7g8h9i0j1k2l3m4n5o6p7')"><div class="cr-icon">🟡</div><div><div class="cr-name">BNB</div><div class="cr-sym">BSC</div></div></div>
+          </div>
+          <div class="cr-box" id="crBox">
+            <div class="cr-lbl">Alamat — <span id="crName">Bitcoin</span></div>
+            <div class="cr-addr" id="crAddr">1A2b3C4d5E6f7G8h9I0jKlMnOpQrStUvWx</div>
+            <button class="btn-cp" style="width:100%;text-align:center;margin-bottom:8px" onclick="cp(this,document.getElementById('crAddr').textContent)">📋 Salin Alamat</button>
+            <div class="cr-warn">⚠️ Kirim HANYA ke alamat ini. Sesuaikan jaringan. Tidak dapat dibatalkan.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="ord-sum">
+    <div class="os-hd"><span>🛒</span><h2>Ringkasan Pesanan</h2></div>
+    <div class="os-body">
+      <div class="os-items" id="osSummary"></div>
+      <div class="os-div"></div>
+      <div class="promo-row"><input class="promo-inp" id="promoCode" placeholder="Kode promo..."/><button class="btn-promo" onclick="applyPromo()">Pakai</button></div>
+      <div class="os-row"><span class="lbl">Subtotal</span><span class="val" id="osSub">Rp 0</span></div>
+      <div class="os-row"><span class="lbl">Biaya Layanan</span><span class="val">Rp 2.000</span></div>
+      <div class="os-row" id="discRow" style="display:none"><span class="lbl" style="color:var(--green)">Diskon</span><span class="val" style="color:var(--green)" id="discVal">-Rp 0</span></div>
+      <div class="os-row tot"><span class="lbl">Total</span><span class="val grad" id="osTotal">Rp 2.000</span></div>
+      <button class="btn-pay" id="btnPay" onclick="processPayment()">🔒 Bayar Sekarang</button>
+      <div class="trust-mini"><span>🔒 SSL</span><span>⚡ &lt;15 Min</span><span>✅ Garansi</span></div>
+    </div>
+  </div>
+</div>
+</div><!-- end pageCheckout -->
+
+<script>
+// ===== PARTICLE ANIMATION =====
+(function(){
+  var cv=document.getElementById('particleCanvas');
+  var ctx=cv.getContext('2d');
+  var pts=[];
+  function resize(){cv.width=innerWidth;cv.height=innerHeight;}
+  resize();window.addEventListener('resize',resize);
+  for(var i=0;i<60;i++){pts.push({x:Math.random()*innerWidth,y:Math.random()*innerHeight,r:Math.random()*1.5+.5,vx:(Math.random()-.5)*.3,vy:(Math.random()-.5)*.3,a:Math.random()});}
+  function tick(){
+    ctx.clearRect(0,0,cv.width,cv.height);
+    pts.forEach(function(p){
+      p.x+=p.vx;p.y+=p.vy;p.a+=.005;
+      if(p.x<0)p.x=cv.width;if(p.x>cv.width)p.x=0;
+      if(p.y<0)p.y=cv.height;if(p.y>cv.height)p.y=0;
+      ctx.beginPath();ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
+      ctx.fillStyle='rgba(139,92,246,'+(0.15+Math.sin(p.a)*.1)+')';ctx.fill();
+    });
+    // Connect nearby particles
+    for(var i=0;i<pts.length;i++){for(var j=i+1;j<pts.length;j++){
+      var dx=pts[i].x-pts[j].x,dy=pts[i].y-pts[j].y,d=Math.sqrt(dx*dx+dy*dy);
+      if(d<100){ctx.beginPath();ctx.moveTo(pts[i].x,pts[i].y);ctx.lineTo(pts[j].x,pts[j].y);ctx.strokeStyle='rgba(59,130,246,'+(1-d/100)*.06+')';ctx.stroke();}
+    }}
+    requestAnimationFrame(tick);
+  }
+  tick();
+})();
+
+// ===== TYPEWRITER EFFECT =====
+(function(){
+  var texts=['Tercepat & Termurah','Aman & Terpercaya','Proses 5 Menit!','Top Up 24/7'];
+  var el=document.getElementById('typewriterEl');
+  var ti=0,ci=0,del=false;
+  function type(){
+    var t=texts[ti];
+    if(!del){el.textContent=t.slice(0,ci+1);ci++;if(ci>=t.length){del=true;setTimeout(type,1800);return;}}
+    else{el.textContent=t.slice(0,ci-1);ci--;if(ci<=0){del=false;ti=(ti+1)%texts.length;setTimeout(type,400);return;}}
+    setTimeout(type,del?60:90);
+  }
+  setTimeout(type,600);
+})();
+
+// ===== SCROLL REVEAL =====
+(function(){
+  var obs=new IntersectionObserver(function(entries){
+    entries.forEach(function(e){if(e.isIntersecting){e.target.classList.add('visible');}});
+  },{threshold:.1,rootMargin:'0px 0px -40px 0px'});
+  document.querySelectorAll('.reveal').forEach(function(el){obs.observe(el);});
+})();
+
+// ===== FLASH SALE COUNTDOWN =====
+(function(){
+  // Set target to next midnight
+  var now=new Date(),target=new Date(now);
+  target.setHours(23,59,59,0);
+  function update(){
+    var diff=target-new Date();
+    if(diff<0){target=new Date();target.setHours(target.getHours()+8);diff=target-new Date();}
+    var h=Math.floor(diff/3600000),m=Math.floor((diff%3600000)/60000),s=Math.floor((diff%60000)/1000);
+    document.getElementById('fsH').textContent=String(h).padStart(2,'0');
+    document.getElementById('fsM').textContent=String(m).padStart(2,'0');
+    document.getElementById('fsS').textContent=String(s).padStart(2,'0');
+  }
+  update();setInterval(update,1000);
+})();
+
+// ===== LIVE PURCHASE TICKER =====
+(function(){
+  var purchases=[
+    {ic:'🎮',txt:'<span>RyuPlayer21</span> baru membeli <span>1.700 Robux</span>'},
+    {ic:'👑',txt:'<span>Zara_ID</span> baru membeli <span>Akun ShadowX99</span>'},
+    {ic:'🐉',txt:'<span>FandiBlox</span> baru membeli <span>Dragon Neon</span>'},
+    {ic:'🎩',txt:'<span>NabilahR</span> baru membeli <span>Dominus Aureus</span>'},
+    {ic:'💎',txt:'<span>AlexRblx</span> baru membeli <span>4.500 Robux</span>'},
+    {ic:'⚡',txt:'<span>SkyGaming</span> baru membeli <span>Light Fruit</span>'},
+    {ic:'🦊',txt:'<span>CoolDude</span> baru membeli <span>Kitsune Pet</span>'},
+    {ic:'⭐',txt:'<span>MegaPlayer</span> baru membeli <span>10.000 Robux</span>'},
+  ];
+  var idx=0;
+  var wrap=document.getElementById('tickerWrap');
+  var notif=document.getElementById('tickerNotif');
+  var ic=document.getElementById('tickerIc');
+  var txt=document.getElementById('tickerTxt');
+  function show(){
+    var p=purchases[idx%purchases.length];idx++;
+    ic.textContent=p.ic;txt.innerHTML=p.txt;
+    notif.classList.add('show');
+    setTimeout(function(){notif.classList.remove('show');},4000);
+  }
+  setTimeout(function(){show();setInterval(show,7000);},3000);
+})();
+
+// ===== RIPPLE EFFECT =====
+document.addEventListener('click',function(e){
+  var btn=e.target.closest('.btn-p,.btn-sm,.btn-co,.btn-pay,.btn-promo,.nav-cart');
+  if(!btn)return;
+  var rect=btn.getBoundingClientRect();
+  var ripple=document.createElement('span');
+  ripple.className='ripple-wave';
+  var size=Math.max(rect.width,rect.height);
+  ripple.style.cssText='width:'+size+'px;height:'+size+'px;left:'+(e.clientX-rect.left-size/2)+'px;top:'+(e.clientY-rect.top-size/2)+'px';
+  btn.style.position='relative';btn.style.overflow='hidden';
+  btn.appendChild(ripple);setTimeout(function(){ripple.remove();},600);
+});
+
+// ===== CART BOUNCE =====
+var _origUpdateCart;
+window.addEventListener('DOMContentLoaded',function(){});
+var _cartBounceOrig=null;
+function bouncecart(){var b=document.querySelector('.nav-cart');if(b){b.classList.remove('cart-bounce');void b.offsetWidth;b.classList.add('cart-bounce');setTimeout(function(){b.classList.remove('cart-bounce');},500);}}
+
+// ===== CONFETTI =====
+function launchConfetti(){
+  var cv=document.getElementById('confettiCanvas');
+  cv.width=innerWidth;cv.height=innerHeight;cv.style.display='block';
+  var ctx=cv.getContext('2d');
+  var pieces=[];var colors=['#3b82f6','#8b5cf6','#22c55e','#ffd700','#ff3b3b','#ff8c00'];
+  for(var i=0;i<120;i++){pieces.push({x:Math.random()*cv.width,y:-10,w:8+Math.random()*8,h:4+Math.random()*4,color:colors[Math.floor(Math.random()*colors.length)],vy:2+Math.random()*4,vx:(Math.random()-.5)*3,rot:Math.random()*360,rotV:(Math.random()-.5)*10});}
+  var frames=0;
+  function draw(){
+    ctx.clearRect(0,0,cv.width,cv.height);
+    pieces.forEach(function(p){
+      p.y+=p.vy;p.x+=p.vx;p.rot+=p.rotV;
+      ctx.save();ctx.translate(p.x,p.y);ctx.rotate(p.rot*Math.PI/180);
+      ctx.fillStyle=p.color;ctx.fillRect(-p.w/2,-p.h/2,p.w,p.h);ctx.restore();
+    });
+    frames++;if(frames<80)requestAnimationFrame(draw);else{cv.style.display='none';ctx.clearRect(0,0,cv.width,cv.height);}
+  }
+  draw();
+}
+
+// ===== SEARCH FUNCTIONALITY =====
+function onSearch(q){
+  var clearBtn=document.getElementById('searchClear');
+  clearBtn.className='search-clear'+(q?'  on':' on');
+  if(!q){clearBtn.classList.remove('on');return;}
+  clearBtn.classList.add('on');
+  // Scroll to first matching section
+  var lower=q.toLowerCase();
+  if('robux'.includes(lower)){scrollTo2('robux');}
+  else if('akun premium og'.includes(lower)){scrollTo2('akun');}
+  else if('limited rare dominus headless'.includes(lower)){scrollTo2('limited');}
+  else if('items adopt blox fruit'.includes(lower)){scrollTo2('items');}
+}
+function clearSearch(){document.getElementById('searchInp').value='';document.getElementById('searchClear').classList.remove('on');}
+
+// ===== FAQ TOGGLE =====
+function toggleFaq(el){
+  var item=el.closest('.faq-item');
+  var isOpen=item.classList.contains('open');
+  document.querySelectorAll('.faq-item').forEach(function(f){f.classList.remove('open');});
+  if(!isOpen)item.classList.add('open');
+}
+
+// ===== PATCH processPayment TO ADD CONFETTI =====
+var ROBUX_B64 = "data:image/png;base64,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";
+var SVC = 2000;
+var PROMOS = {EXCMURAH:10000,NEWUSER:15000,FLASH50:5000};
+var cart = [];
+var discount = 0;
+var timerInt = null;
+var timerSec = 899;
+
+// Robux packages data
+var rbxPacks = [
+  {amt:'400',price:15000,bonus:'',pop:false},
+  {amt:'800',price:28000,bonus:'Hemat Rp 2.000',pop:false},
+  {amt:'1.700',price:55000,bonus:'+100 Bonus Robux!',pop:true},
+  {amt:'4.500',price:140000,bonus:'+500 Bonus Robux!',pop:false},
+  {amt:'10.000',price:300000,bonus:'+1.500 Bonus Robux!',pop:false},
+  {amt:'22.500',price:650000,bonus:'+5.000 Bonus Robux!',pop:false}
+];
+
+// Render robux cards
+function renderRbx() {
+  var g = document.getElementById('rbxGrid');
+  var html = '';
+  rbxPacks.forEach(function(p) {
+    var priceStr = 'Rp ' + p.price.toLocaleString('id');
+    html += '<div class="rbx-card' + (p.pop?' pop':'') + '" onclick="buyNow(\'' + p.amt + ' Robux\',\'RBXICON\',' + p.price + ',\'Paket Robux\')">';
+    if(p.pop) html += '<div class="pop-lbl">⭐ Populer</div>';
+    html += '<div class="rbx-ic"><img src="' + ROBUX_B64 + '" style="width:36px;height:36px;object-fit:contain;pointer-events:none" draggable="false"/></div>';
+    html += '<div class="rbx-amt grad">' + p.amt + '</div>';
+    html += '<div class="rbx-sub">Robux</div>';
+    html += '<div class="rbx-price">' + priceStr + '</div>';
+    html += '<div class="rbx-bonus">' + (p.bonus||'&nbsp;') + '</div>';
+    html += '<div class="btn-buy">Beli Sekarang</div>';
+    html += '</div>';
+  });
+  g.innerHTML = html;
+}
+
+// PAGES
+function showPage(id) {
+  document.getElementById('pageStore').classList.remove('on');
+  document.getElementById('pageCheckout').classList.remove('on');
+  document.getElementById(id).classList.add('on');
+  window.scrollTo(0,0);
+}
+
+function goHome() {
+  document.getElementById('succOv').classList.remove('on');
+  showPage('pageStore');
+  document.getElementById('navLinks').style.display = '';
+  clearInterval(timerInt);
+}
+
+function goCheckout() {
+  if(cart.length === 0) return;
+  closeCart();
+  showPage('pageCheckout');
+  document.getElementById('navLinks').style.display = 'none';
+  renderSummary();
+  drawQR();
+  startTimer();
+}
+
+function scrollTo2(id) {
+  var el = document.getElementById(id);
+  if(el) el.scrollIntoView({behavior:'smooth'});
+}
+
+// CART
+function openCart() { document.getElementById('cartOv').classList.add('on'); document.getElementById('cartSb').classList.add('on'); }
+function closeCart() { document.getElementById('cartOv').classList.remove('on'); document.getElementById('cartSb').classList.remove('on'); }
+
+function addToCart(name, icon, price, meta) {
+  for(var i=0;i<cart.length;i++) { if(cart[i].name===name){toast('Item sudah di keranjang!','warn');return;} }
+  cart.push({name:name,icon:icon,price:price,meta:meta});
+  updateCart();
+  bouncecart();
+  toast('✓ '+name+' ditambahkan!','ok');
+}
+
+function removeFromCart(i) { cart.splice(i,1); updateCart(); renderCartSb(); }
+
+function updateCart() {
+  var dot = document.getElementById('cartDot');
+  var btnCo = document.getElementById('btnCo');
+  dot.textContent = cart.length;
+  dot.style.display = cart.length > 0 ? 'flex' : 'none';
+  btnCo.disabled = cart.length === 0;
+  renderCartSb();
+  document.getElementById('cartTotal').textContent = fmt(cart.reduce(function(s,i){return s+i.price;},0));
+}
+
+function renderCartSb() {
+  var el = document.getElementById('cartItems');
+  if(cart.length === 0) { el.innerHTML = '<div class="cart-empty"><div class="ic">🛒</div><p style="font-weight:700;font-size:13px">Keranjang kosong</p></div>'; return; }
+  var html = '';
+  cart.forEach(function(item,i) {
+    var ic = item.icon === 'RBXICON' ? '<img src="'+ROBUX_B64+'" style="width:22px;height:22px;object-fit:contain;pointer-events:none"/>' : item.icon;
+    html += '<div class="cart-item"><div class="ci-ic">'+ic+'</div><div class="ci-info"><div class="ci-name">'+item.name+'</div><div class="ci-meta">'+item.meta+'</div><div class="ci-price grad">'+fmt(item.price)+'</div></div><button class="ci-rm" onclick="removeFromCart('+i+')">✕</button></div>';
+  });
+  el.innerHTML = html;
+}
+
+function buyNow(name, icon, price, meta) {
+  cart = [{name:name,icon:icon,price:price,meta:meta}];
+  discount = 0;
+  updateCart();
+  goCheckout();
+}
+
+function fmt(n) { return 'Rp '+n.toLocaleString('id'); }
+
+// ORDER SUMMARY
+function renderSummary() {
+  discount = 0;
+  document.getElementById('discRow').style.display = 'none';
+  document.getElementById('promoCode').value = '';
+  var html = '';
+  cart.forEach(function(item) {
+    var ic = item.icon === 'RBXICON' ? '<img src="'+ROBUX_B64+'" style="width:22px;height:22px;object-fit:contain;pointer-events:none"/>' : item.icon;
+    html += '<div class="os-item"><div class="os-item-ic">'+ic+'</div><div><div class="os-item-name">'+item.name+'</div><div class="os-item-meta">'+item.meta+'</div></div><div class="os-item-price grad">'+fmt(item.price)+'</div></div>';
+  });
+  document.getElementById('osSummary').innerHTML = html;
+  updateTotals();
+}
+
+function updateTotals() {
+  var sub = cart.reduce(function(s,i){return s+i.price;},0);
+  var total = sub + SVC - discount;
+  document.getElementById('osSub').textContent = fmt(sub);
+  document.getElementById('osTotal').textContent = fmt(total);
+  if(document.getElementById('pm-qris').classList.contains('on')) drawQR();
+}
+
+// QR CANVAS
+function drawQR() {
+  var total = cart.reduce(function(s,i){return s+i.price;},0) + SVC - discount;
+  document.getElementById('qrAmt').textContent = fmt(total);
+  var cv = document.getElementById('qrCanvas');
+  if(!cv) return;
+  var ctx = cv.getContext('2d');
+  var W = 160;
+  ctx.fillStyle = '#fff'; ctx.fillRect(0,0,W,W);
+  // Finder patterns
+  function finder(x,y) {
+    ctx.fillStyle='#000'; ctx.fillRect(x,y,42,42);
+    ctx.fillStyle='#fff'; ctx.fillRect(x+6,y+6,30,30);
+    ctx.fillStyle='#000'; ctx.fillRect(x+12,y+12,18,18);
+  }
+  finder(8,8); finder(110,8); finder(8,110);
+  // Data dots
+  ctx.fillStyle='#000';
+  var seed = total + 12345;
+  function rnd(){seed=(seed*1664525+1013904223)&0xffffffff;return(seed>>>0)/4294967295;}
+  for(var r=0;r<13;r++){for(var c=0;c<13;c++){
+    var px=56+c*8,py=8+r*8;
+    if(py>100&&px<56) continue;
+    if(rnd()>0.5) ctx.fillRect(px,py,7,7);
+  }}
+  // Center label
+  ctx.fillStyle='rgba(59,130,246,0.2)'; ctx.fillRect(56,60,48,22);
+  ctx.fillStyle='#3b82f6'; ctx.font='bold 10px Arial'; ctx.textAlign='center';
+  ctx.fillText('EXC',80,75);
+}
+
+// TIMER
+function startTimer() {
+  clearInterval(timerInt);
+  timerSec = 899;
+  var el = document.getElementById('timerVal');
+  timerInt = setInterval(function(){
+    if(timerSec<=0){clearInterval(timerInt);el.textContent='00:00';return;}
+    timerSec--;
+    var m=String(Math.floor(timerSec/60)).padStart(2,'0');
+    var s=String(timerSec%60).padStart(2,'0');
+    el.textContent=m+':'+s;
+    if(timerSec<60) el.style.color='#ff3b3b';
+  },1000);
+}
+
+// PM SWITCH
+function switchPM(id,tab) {
+  document.querySelectorAll('.pm-tab').forEach(function(t){t.classList.remove('on');});
+  document.querySelectorAll('.pm-cont').forEach(function(c){c.classList.remove('on');});
+  tab.classList.add('on');
+  document.getElementById('pm-'+id).classList.add('on');
+  if(id==='qris') drawQR();
+}
+
+function selBank(el){document.querySelectorAll('.bank-opt').forEach(function(b){b.classList.remove('sel');});el.classList.add('sel');}
+function selEw(el,name,num){document.querySelectorAll('.ew-opt').forEach(function(o){o.classList.remove('sel');});el.classList.add('sel');document.getElementById('ewName').textContent=name;document.getElementById('ewNum').textContent=num;document.getElementById('ewDetail').classList.add('on');}
+function selCr(el,name,addr){document.querySelectorAll('.cr-opt').forEach(function(o){o.classList.remove('sel');});el.classList.add('sel');document.getElementById('crName').textContent=name;document.getElementById('crAddr').textContent=addr;document.getElementById('crBox').classList.add('on');}
+
+function cp(btn,text){
+  navigator.clipboard.writeText(text).catch(function(){});
+  btn.textContent='✓ Disalin'; btn.classList.add('ok');
+  setTimeout(function(){btn.textContent='Salin';btn.classList.remove('ok');},2000);
+  toast('✓ Disalin!','good');
+}
+
+function prevProof(input,wrapId,imgId){
+  var f=input.files[0];if(!f)return;
+  var r=new FileReader();
+  r.onload=function(e){document.getElementById(imgId).src=e.target.result;document.getElementById(wrapId).style.display='block';};
+  r.readAsDataURL(f);
+  toast('✓ Bukti terupload!','good');
+}
+
+function applyPromo(){
+  var code=document.getElementById('promoCode').value.trim().toUpperCase();
+  if(PROMOS[code]){
+    discount=PROMOS[code];
+    document.getElementById('discRow').style.display='flex';
+    document.getElementById('discVal').textContent='-'+fmt(discount);
+    updateTotals();
+    toast('🎉 Promo berhasil! Hemat '+fmt(discount),'good');
+  } else { toast('⚠️ Kode promo tidak valid!','warn'); }
+}
+
+function setTab(btn){btn.closest('.cat-tabs').querySelectorAll('.cat-tab').forEach(function(b){b.classList.remove('on');});btn.classList.add('on');}
+
+function processPayment(){
+  var user=document.getElementById('rbxUser').value.trim();
+  var wa=document.getElementById('waNum').value.trim();
+  var pl=document.getElementById('platform').value;
+  if(!user){toast('⚠️ Masukkan username Roblox!','warn');return;}
+  if(!wa){toast('⚠️ Masukkan nomor WhatsApp!','warn');return;}
+  if(!pl){toast('⚠️ Pilih platform kontak!','warn');return;}
+  var btn=document.getElementById('btnPay');
+  btn.innerHTML='⏳ Memproses...';btn.disabled=true;
+  setTimeout(function(){
+    clearInterval(timerInt);
+    var id='EXC-'+Math.random().toString(36).substr(2,7).toUpperCase();
+    document.getElementById('orderId').textContent=id;
+    document.getElementById('succOv').classList.add('on');
+    launchConfetti();
+    cart=[];discount=0;updateCart();
+    btn.innerHTML='🔒 Bayar Sekarang';btn.disabled=false;
+  },2000);
+}
+
+function toast(msg,type){
+  var t=document.getElementById('toast');
+  t.textContent=msg;t.className='toast '+type;t.classList.add('on');
+  setTimeout(function(){t.classList.remove('on');},3000);
+}
+
+// INIT
+renderRbx();
+updateCart();
+</script>
+</body>
+</html>
